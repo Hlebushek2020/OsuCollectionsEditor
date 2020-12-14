@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Global\Enums\GameplayMode.cs" />
     <Compile Include="OsuDb\Enums\RankedStatus.cs" />
     <Compile Include="OsuDb\Enums\UserPermissions.cs" />
     <Compile Include="OsuDb\Models\Beatmap.cs" />
@@ -50,6 +51,8 @@
     <Compile Include="OsuDb\OsuDbReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="OsuDb\TODO_GENERAL.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

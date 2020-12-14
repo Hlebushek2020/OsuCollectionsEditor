@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace OsuDbApi.OsuDb.Models
 {
-    class TimingPoint
+    public struct TimingPoint
     {
+        public double BPM;
+        public double Offset;
+        public bool IsInherit;
     }
 }
