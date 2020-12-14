@@ -42,8 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OsuDb\Enums\RankedStatus.cs" />
     <Compile Include="OsuDb\Enums\UserPermissions.cs" />
     <Compile Include="OsuDb\Models\Beatmap.cs" />
+    <Compile Include="OsuDb\Models\IntDoublePair.cs" />
+    <Compile Include="OsuDb\Models\TimingPoint.cs" />
     <Compile Include="OsuDb\OsuDbReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
