@@ -29,7 +29,7 @@ namespace OsuDbApi.OsuDb.Models
         public short SlidersCount { get; set; }
         public short SpinnersCount { get; set; }
         // TODO L: convert from long (long is tick)
-        public TimeSpan ModificationTime { get; set; }
+        public DateTime LastModificationTime { get; set; }
         // TODO L: convert from byte if the version is less than 20140609 else float (single)
         public float ApproachRate { get; set; }
         // TODO L: convert from byte if the version is less than 20140609 else float (single)
@@ -52,7 +52,7 @@ namespace OsuDbApi.OsuDb.Models
         // TODO L: convert from int (int in milliseconds)
         public TimeSpan TotalTime { get; set; }
         // TODO L: convert from int (int in milliseconds)
-        public TimeSpan AudioPreview { get; set; }
+        public TimeSpan AudioPreviewTime { get; set; }
         public List<TimingPoint> TimingPoints { get; set; }
         public int Id { get; set; }
         public int SetId { get; set; }

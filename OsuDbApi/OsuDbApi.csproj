@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionDb\CollectionDbReader.cs" />
+    <Compile Include="CollectionDb\CollectionDbWritter.cs" />
     <Compile Include="Global\Enums\GameplayMode.cs" />
     <Compile Include="OsuDb\Enums\RankedStatus.cs" />
     <Compile Include="OsuDb\Enums\UserPermissions.cs" />

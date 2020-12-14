@@ -8,8 +8,15 @@ namespace OsuDbApi.OsuDb.Models
 {
     public struct TimingPoint
     {
-        public double BPM;
-        public double Offset;
-        public bool IsInherit;
+        public double BPM { get; }
+        public double Offset { get; }
+        public bool IsInherit { get; }
+        
+        public TimingPoint(double bpm, double offset, bool isInherit)
+        {
+            BPM = bpm;
+            Offset = offset;
+            IsInherit = isInherit;
+        }
     }
 }

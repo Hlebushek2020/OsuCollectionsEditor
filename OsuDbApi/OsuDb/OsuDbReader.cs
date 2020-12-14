@@ -1,4 +1,5 @@
-﻿using OsuDbApi.OsuDb.Enums;
+﻿using OsuDbApi.Global.Enums;
+using OsuDbApi.OsuDb.Enums;
 using OsuDbApi.OsuDb.Models;
 using System;
 using System.Collections.Generic;
@@ -22,8 +23,10 @@ namespace OsuDbApi.OsuDb
         public int BeatmapsCount { get; }
         public UserPermissions UserPermissions { get; }
 
-        private FileStream osuDbFileStream;
-        private BinaryReader osuDbBinaryReader;
+        private const byte StringIndicator = 0x0b;
+
+        private readonly FileStream osuDbFileStream;
+        private readonly BinaryReader osuDbBinaryReader;
         private Beatmap beatmap;
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace OsuDbApi.OsuDb
             FolderCount = osuDbBinaryReader.ReadInt32();
             AccountUnlocked = osuDbBinaryReader.ReadBoolean();
             DateAccountUnlocked = new DateTime(osuDbBinaryReader.ReadInt64());
-            if (osuDbBinaryReader.ReadByte() == 0x0b)
+            if (osuDbBinaryReader.ReadByte() == StringIndicator)
                 PlayerName = osuDbBinaryReader.ReadString();
             BeatmapsCount = osuDbBinaryReader.ReadInt32();
             long currentPosition = osuDbFileStream.Position;
@@ -58,7 +61,150 @@ namespace OsuDbApi.OsuDb
                 return false;
             try
             {
+                Beatmap beatmap = new Beatmap();
+                // Size in bytes of the beatmap entry
+                if (OsuVersion < 20191106)
+                    beatmap.SizeInBytes = osuDbBinaryReader.ReadInt32();
+                // Artist name
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.ArtistName = osuDbBinaryReader.ReadString();
+                // Artist name, in Unicode
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.ArtistNameUnicode = osuDbBinaryReader.ReadString();
+                // Song title
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.SongTitle = osuDbBinaryReader.ReadString();
+                // Song title, in Unicode
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.SongTitleUnicode = osuDbBinaryReader.ReadString();
+                // Creator name
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.CreatorName = osuDbBinaryReader.ReadString();
+                // Difficulty
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.Difficulty = osuDbBinaryReader.ReadString();
+                // Audio file name
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.AudioFileName = osuDbBinaryReader.ReadString();
+                // MD5 hash of the beatmap
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.Md5Hash = osuDbBinaryReader.ReadString();
+                // Name of the .osu file corresponding to this beatmap
+                if (osuDbBinaryReader.ReadByte() == StringIndicator)
+                    beatmap.OsuFileName = osuDbBinaryReader.ReadString();
+                // Ranked status
+                beatmap.RankedStatus = (RankedStatus)osuDbBinaryReader.ReadByte();
+                // Number of hitcircles
+                beatmap.HitcirclesCount = osuDbBinaryReader.ReadInt16();
+                // Number of sliders
+                beatmap.SlidersCount = osuDbBinaryReader.ReadInt16();
+                // Number of spinners
+                beatmap.SpinnersCount = osuDbBinaryReader.ReadInt16();
+                // Last modification time
+                beatmap.LastModificationTime = new DateTime(osuDbBinaryReader.ReadInt64());
+                // Approach rate
+                // Circle size
+                // HP drain
+                // Overall difficulty
+                if (OsuVersion < 20140609)
+                {
+                    beatmap.ApproachRate = osuDbBinaryReader.ReadByte();
+                    beatmap.CircleSize = osuDbBinaryReader.ReadByte();
+                    beatmap.HpDrain = osuDbBinaryReader.ReadByte();
+                    beatmap.OverallDifficulty = osuDbBinaryReader.ReadByte();
+                }
+                else
+                {
+                    beatmap.ApproachRate = osuDbBinaryReader.ReadSingle();
+                    beatmap.CircleSize = osuDbBinaryReader.ReadSingle();
+                    beatmap.HpDrain = osuDbBinaryReader.ReadSingle();
+                    beatmap.OverallDifficulty = osuDbBinaryReader.ReadSingle();
+                }
+                // Slider velocity
+                beatmap.SliderVelocity = osuDbBinaryReader.ReadDouble();
+                // Star Rating info
+                if (OsuVersion >= 20140609)
+                {
+                    // Star Rating info for osu! standard
+                    int count = osuDbBinaryReader.ReadInt32();
+                    beatmap.StarRatingStandart = new List<IntDoublePair>();
+                    int intValue;
+                    double doubleValue;
+                    for (int i = 0; i < count; i++)
+                    {
+                        intValue = osuDbBinaryReader.ReadInt32();
+                        doubleValue = osuDbBinaryReader.ReadDouble();
+                        beatmap.StarRatingStandart.Add(new IntDoublePair(intValue, doubleValue));
+                    }
+                    // Star Rating info for Taiko
+                    count = osuDbBinaryReader.ReadInt32();
+                    beatmap.StarRatingTaiko = new List<IntDoublePair>();
+                    for (int i = 0; i < count; i++)
+                    {
+                        intValue = osuDbBinaryReader.ReadInt32();
+                        doubleValue = osuDbBinaryReader.ReadDouble();
+                        beatmap.StarRatingTaiko.Add(new IntDoublePair(intValue, doubleValue));
+                    }
+                    // Star Rating info for CTB
+                    count = osuDbBinaryReader.ReadInt32();
+                    beatmap.StarRatingCtb = new List<IntDoublePair>();
+                    for (int i = 0; i < count; i++)
+                    {
+                        intValue = osuDbBinaryReader.ReadInt32();
+                        doubleValue = osuDbBinaryReader.ReadDouble();
+                        beatmap.StarRatingCtb.Add(new IntDoublePair(intValue, doubleValue));
+                    }
+                    // Star Rating info for osu!mania
+                    count = osuDbBinaryReader.ReadInt32();
+                    beatmap.StarRatingMania = new List<IntDoublePair>();
+                    for (int i = 0; i < count; i++)
+                    {
+                        intValue = osuDbBinaryReader.ReadInt32();
+                        doubleValue = osuDbBinaryReader.ReadDouble();
+                        beatmap.StarRatingMania.Add(new IntDoublePair(intValue, doubleValue));
+                    }
+                }
+                // Drain time
+                beatmap.DrainTime = new TimeSpan(0, 0, osuDbBinaryReader.ReadInt32());
+                // Total time
+                beatmap.TotalTime = new TimeSpan(0, 0, 0, 0, osuDbBinaryReader.ReadInt32());
+                // Time when the audio preview when hovering over a beatmap in beatmap select starts
+                beatmap.AudioPreviewTime = new TimeSpan(0, 0, 0, 0, osuDbBinaryReader.ReadInt32());
+                // Timing points
+                int count = osuDbBinaryReader.ReadInt32();
+                beatmap.TimingPoints = new List<TimingPoint>();
+                double[] doubleValues = new double[2];
+                bool boolValue;
+                for (int i = 0; i < count; i++)
+                {
+                    doubleValues[0] = osuDbBinaryReader.ReadDouble();
+                    doubleValues[1] = osuDbBinaryReader.ReadDouble();
+                    boolValue = osuDbBinaryReader.ReadBoolean();
+                    beatmap.TimingPoints.Add(new TimingPoint(doubleValues[0], doubleValues[1], boolValue));
+                }
+                // Beatmap ID
+                beatmap.Id = osuDbBinaryReader.ReadInt32();
+                // Beatmap set ID
+                beatmap.SetId = osuDbBinaryReader.ReadInt32();
+                // Thread ID
+                beatmap.ThreadId = osuDbBinaryReader.ReadInt32();
+                // Grade achieved in osu! standard.
+                beatmap.GradeAchievedStandart = osuDbBinaryReader.ReadByte();
+                // Grade achieved in Taiko
+                beatmap.GradeAchievedTaiko = osuDbBinaryReader.ReadByte();
+                // Grade achieved in CTB
+                beatmap.GradeAchievedCtb = osuDbBinaryReader.ReadByte();
+                // Grade achieved in osu!mania
+                beatmap.GradeAchievedMania = osuDbBinaryReader.ReadByte();
+                // Local beatmap offset
+                beatmap.LocalOffset = osuDbBinaryReader.ReadInt16();
+                // Stack leniency
+                beatmap.StackLeniency = osuDbBinaryReader.ReadSingle();
+                // Osu gameplay mode
+                beatmap.GameplayMode = (GameplayMode)osuDbBinaryReader.ReadByte();
+
                 // logik
+                BeatmapReadCount++;
                 return true;
             }
             catch { return false; }
