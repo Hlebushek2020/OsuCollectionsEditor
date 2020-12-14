@@ -38,11 +38,14 @@ namespace OsuDbApi.OsuDb
             FolderCount = osuDbBinaryReader.ReadInt32();
             AccountUnlocked = osuDbBinaryReader.ReadBoolean();
             DateAccountUnlocked = new DateTime(osuDbBinaryReader.ReadInt64());
-            PlayerName = osuDbBinaryReader.ReadString();
+            if (osuDbBinaryReader.ReadByte() == 0x0b)
+                PlayerName = osuDbBinaryReader.ReadString();
             BeatmapsCount = osuDbBinaryReader.ReadInt32();
             long currentPosition = osuDbFileStream.Position;
-            osuDbFileStream.Position = osuDbFileStream.Length - 5;
-            UserPermissions = (UserPermissions)osuDbBinaryReader.ReadInt32();
+            osuDbFileStream.Position = osuDbFileStream.Length - 4;
+
+            UserPermissions = (UserPermissions)osuDbBinaryReader.ReadInt32(); //!!!!!
+
             osuDbFileStream.Position = currentPosition;
         }
 

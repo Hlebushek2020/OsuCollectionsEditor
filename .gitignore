@@ -1,7 +1,8 @@
 # DIRECTORIES
 /OsuDbApi/VS_Output/*
+/OsuDbApi-TEST/VS_Output/*
 /.vs/*
 # FILES
+/OsuDbApi-TEST/osu!.txt
 *Thumbs.db
 *.user
-*TODO*.txt
