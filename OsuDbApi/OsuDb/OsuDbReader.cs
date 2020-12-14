@@ -12,6 +12,8 @@ namespace OsuDbApi.OsuDb
     public class OsuDbReader : IDisposable
     {
         public bool IsDisposed { get; private set; } = false;
+        public int BeatmapReadCount { get; private set; } = 0;
+
         public int OsuVersion { get; }
         public int FolderCount { get; }
         public bool AccountUnlocked { get; }
@@ -20,7 +22,6 @@ namespace OsuDbApi.OsuDb
         public int BeatmapsCount { get; }
         public UserPermissions UserPermissions { get; }
 
-        private int beatmapReadCount = 0;
         private FileStream osuDbFileStream;
         private BinaryReader osuDbBinaryReader;
         private Beatmap beatmap;
@@ -45,9 +46,12 @@ namespace OsuDbApi.OsuDb
             osuDbFileStream.Position = currentPosition;
         }
 
-        public bool Read()
+        /// <summary>
+        /// Читает следующую карту и возвращает true при успешном чтении
+        /// </summary>
+        public bool NextBeatmap()
         {
-            if (beatmapReadCount == BeatmapsCount)
+            if (BeatmapReadCount == BeatmapsCount)
                 return false;
             try
             {

@@ -8,5 +8,6 @@ namespace OsuDbApi.OsuDb.Models
 {
     public class Beatmap
     {
+        public int? SizeInBytes { get; set; }
     }
 }
