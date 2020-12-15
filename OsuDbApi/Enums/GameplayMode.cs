@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuDbApi.Global.Enums
+namespace OsuDbApi.Enums
 {
     public enum GameplayMode : byte
     {

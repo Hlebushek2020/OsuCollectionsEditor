@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace OsuDbApi.CollectionDb.Models
 {
-    class BeatmapCollection
+    public class BeatmapCollection
     {
+        public string Name { get; set; }
+        public List<string> Beatmaps { get; set; }
     }
 }

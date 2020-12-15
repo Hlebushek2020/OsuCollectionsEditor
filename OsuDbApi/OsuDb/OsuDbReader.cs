@@ -1,4 +1,5 @@
-﻿using OsuDbApi.Global.Enums;
+﻿using OsuDbApi.Enums;
+using OsuDbApi.Interface;
 using OsuDbApi.OsuDb.Enums;
 using OsuDbApi.OsuDb.Models;
 using System;
@@ -7,7 +8,7 @@ using System.IO;
 
 namespace OsuDbApi.OsuDb
 {
-    public class OsuDbReader : IDisposable
+    public class OsuDbReader : IDisposable, IDbReader<Beatmap>
     {
         public bool IsDisposed { get; private set; } = false;
         public int BeatmapReadCount { get; private set; } = 0;
@@ -27,7 +28,7 @@ namespace OsuDbApi.OsuDb
         private Beatmap beatmap;
 
         /// <summary>
-        /// Инициализует класс для работы с файлом
+        /// Инициализует класс для чтения файла osu!.db
         /// </summary>
         /// <param name="osuDbFile">Файл</param>
         public OsuDbReader(string osuDbFile)
@@ -52,7 +53,7 @@ namespace OsuDbApi.OsuDb
         /// <summary>
         /// Читает следующую карту и возвращает true при успешном чтении
         /// </summary>
-        public bool NextBeatmap()
+        public bool Next()
         {
             if (BeatmapReadCount == BeatmapsCount)
                 return false;

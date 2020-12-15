@@ -1,4 +1,4 @@
-﻿using OsuDbApi.Global.Enums;
+﻿using OsuDbApi.Enums;
 using OsuDbApi.OsuDb.Enums;
 using System;
 using System.Collections.Generic;
