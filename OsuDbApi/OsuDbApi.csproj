@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="CollectionDb\CollectionDbReader.cs" />
     <Compile Include="CollectionDb\CollectionDbWritter.cs" />
+    <Compile Include="CollectionDb\Models\BeatmapCollection.cs" />
     <Compile Include="Global\Enums\GameplayMode.cs" />
     <Compile Include="OsuDb\Enums\RankedStatus.cs" />
     <Compile Include="OsuDb\Enums\UserPermissions.cs" />
@@ -54,7 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="OsuDb\TODO_GENERAL.txt" />
+    <Content Include="TODO_GENERAL.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

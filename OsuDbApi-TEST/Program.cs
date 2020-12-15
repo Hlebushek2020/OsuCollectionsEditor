@@ -14,6 +14,7 @@ namespace OsuDbApi_TEST
             string osudb = Console.ReadLine();
             OsuDbReader reader = new OsuDbReader(osudb);
             reader.NextBeatmap();
+            reader.NextBeatmap();
         }
     }
 }
