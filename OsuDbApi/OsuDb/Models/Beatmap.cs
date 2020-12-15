@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace OsuDbApi.OsuDb.Models
 {
 
-    // https://osu.ppy.sh/wiki/ru/osu%21_File_Formats/Db_%28file_format%29#collection.db-format
+    // DOCS: https://osu.ppy.sh/wiki/ru/osu%21_File_Formats/Db_%28file_format%29#osu!.db-format
 
     public class Beatmap
     {

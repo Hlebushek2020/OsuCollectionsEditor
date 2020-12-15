@@ -47,6 +47,7 @@
     <Compile Include="CollectionDb\Models\BeatmapCollection.cs" />
     <Compile Include="Enums\GameplayMode.cs" />
     <Compile Include="Interfaces\IDbReader.cs" />
+    <Compile Include="Interfaces\IDbWritter.cs" />
     <Compile Include="OsuDb\Enums\RankedStatus.cs" />
     <Compile Include="OsuDb\Enums\UserPermissions.cs" />
     <Compile Include="OsuDb\Models\Beatmap.cs" />
