@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuDbApi", "OsuDbApi\OsuDbA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuDbApi-TEST", "OsuDbApi-TEST\OsuDbApi-TEST.csproj", "{10764077-EBBA-46F4-AD91-150339865127}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OsuCollectionsEditor", "OsuCollectionsEditor\OsuCollectionsEditor.csproj", "{4A5A655C-464C-4CCA-85E3-0AEF5D697F28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{10764077-EBBA-46F4-AD91-150339865127}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10764077-EBBA-46F4-AD91-150339865127}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10764077-EBBA-46F4-AD91-150339865127}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A5A655C-464C-4CCA-85E3-0AEF5D697F28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A5A655C-464C-4CCA-85E3-0AEF5D697F28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A5A655C-464C-4CCA-85E3-0AEF5D697F28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A5A655C-464C-4CCA-85E3-0AEF5D697F28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
