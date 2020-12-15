@@ -8,6 +8,9 @@ using System.IO;
 
 namespace OsuDbApi.OsuDb
 {
+
+    // DOCS: https://osu.ppy.sh/wiki/ru/osu%21_File_Formats/Db_%28file_format%29#osu!.db-format
+
     public class OsuDbReader : IDisposable, IDbReader<Beatmap>
     {
         public bool IsDisposed { get; private set; } = false;
