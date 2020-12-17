@@ -23,6 +23,7 @@ namespace OsuDbApi.OsuDb
         public string PlayerName { get; }
         public int BeatmapsCount { get; }
         public UserPermissions UserPermissions { get; }
+        public string OsuDbFile { get; }
 
         private const byte StringIndicator = 0x0b; // (DEC 11)
 
@@ -36,6 +37,7 @@ namespace OsuDbApi.OsuDb
         /// <param name="osuDbFile">Файл</param>
         public OsuDbReader(string osuDbFile)
         {
+            OsuDbFile = osuDbFile;
             osuDbFileStream = new FileStream(osuDbFile, FileMode.Open, FileAccess.Read);
             osuDbBinaryReader = new BinaryReader(osuDbFileStream);
             OsuVersion = osuDbBinaryReader.ReadInt32();
@@ -187,7 +189,7 @@ namespace OsuDbApi.OsuDb
             {
                 doubleValue0 = osuDbBinaryReader.ReadDouble();
                 doubleValue1 = osuDbBinaryReader.ReadDouble();
-                boolValue = osuDbBinaryReader.ReadBoolean();
+                boolValue = !osuDbBinaryReader.ReadBoolean();
                 beatmap.TimingPoints.Add(new TimingPoint(doubleValue0, doubleValue1, boolValue));
             }
             // Beatmap ID
