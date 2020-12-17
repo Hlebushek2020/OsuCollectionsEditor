@@ -1,5 +1,5 @@
 ﻿using OsuDbApi.CollectionDb.Models;
-using OsuDbApi.Interface;
+using OsuDbApi.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,6 +19,7 @@ namespace OsuDbApi.CollectionDb
 
         public int OsuVersion { get; }
         public int BeatmapCollectionsCount { get; }
+        public string CollectionDbFile { get; }
 
         private const byte StringIndicator = 0x0b; // (DEC 11)
 
@@ -29,17 +30,18 @@ namespace OsuDbApi.CollectionDb
         /// <summary>
         /// Инициализует класс для чтения файла collection.db
         /// </summary>
-        /// <param name="osuDbFile">Файл</param>
-        public CollectionDbReader(string osuDbFile)
+        /// <param name="collectionDbFile">Файл</param>
+        public CollectionDbReader(string collectionDbFile)
         {
-            osuDbFileStream = new FileStream(osuDbFile, FileMode.Open, FileAccess.Read);
+            CollectionDbFile = collectionDbFile;
+            osuDbFileStream = new FileStream(collectionDbFile, FileMode.Open, FileAccess.Read);
             osuDbBinaryReader = new BinaryReader(osuDbFileStream);
             OsuVersion = osuDbBinaryReader.ReadInt32();
             BeatmapCollectionsCount = osuDbBinaryReader.ReadInt32();
         }
 
         /// <summary>
-        /// Читает следующую карту и возвращает true при успешном чтении
+        /// Читает следующую коллекцию и возвращает true при успешном чтении
         /// </summary>
         public bool Next()
         {

@@ -1,5 +1,5 @@
 ﻿using OsuDbApi.Enums;
-using OsuDbApi.Interface;
+using OsuDbApi.Interfaces;
 using OsuDbApi.OsuDb.Enums;
 using OsuDbApi.OsuDb.Models;
 using System;

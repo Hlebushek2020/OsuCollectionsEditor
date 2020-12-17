@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuDbApi.Interface
+namespace OsuDbApi.Interfaces
 {
     interface IDbReader<T>
     {

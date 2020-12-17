@@ -1,48 +1,42 @@
 ﻿using OsuDbApi.CollectionDb.Models;
-using OsuDbApi.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuDbApi.CollectionDb
 {
 
     // TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST
 
-    public class CollectionDbWritter : IDbWritter
+    public class CollectionDbWritter
     {
-        public Dictionary<string, BeatmapCollection> BeatmapCollections { get; } = new Dictionary<string, BeatmapCollection>();
+        public List<BeatmapCollection> BeatmapCollections { get; } = new List<BeatmapCollection>();
 
         public int OsuVersion { get; }
-        public string FullFileName { get; }
+        public string CollectionDbFile { get; }
 
         private const byte StringIndicator = 0x0b; // (DEC 11)
 
         /// <summary>
-        /// Инициализует класс для записи в файл collection.db
+        /// Инициализует класс для записи данных в файл collection.db
         /// </summary>
-        /// <param name="fullFileName">Путь с именем файла</param>
+        /// <param name="collectionDbFile">Имя файла, включая путь к нему</param>
         /// <param name="osuVersion">Osu Version (Default: 20201210)</param>
-        public CollectionDbWritter(string fullFileName, int osuVersion = 20201210)
+        public CollectionDbWritter(string collectionDbFile, int osuVersion = 20201210)
         {
             OsuVersion = osuVersion;
-            FullFileName = fullFileName;
+            CollectionDbFile = collectionDbFile;
         }
 
         public void Save()
         {
-            using (FileStream collectionDbFileStream = new FileStream(FullFileName, FileMode.Create, FileAccess.Write))
+            using (FileStream collectionDbFileStream = new FileStream(CollectionDbFile, FileMode.Create, FileAccess.Write))
             {
                 using (BinaryWriter collectionDbBinaryWriter = new BinaryWriter(collectionDbFileStream))
                 {
                     collectionDbBinaryWriter.Write(OsuVersion);
                     collectionDbBinaryWriter.Write(BeatmapCollections.Count);
-                    foreach (string name in BeatmapCollections.Keys)
+                    foreach (BeatmapCollection beatmapCollection in BeatmapCollections)
                     {
-                        BeatmapCollection beatmapCollection = BeatmapCollections[name];
                         collectionDbBinaryWriter.Write(StringIndicator);
                         collectionDbBinaryWriter.Write(beatmapCollection.Name);
                         collectionDbBinaryWriter.Write(beatmapCollection.Beatmaps.Count);

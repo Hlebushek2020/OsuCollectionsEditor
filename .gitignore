@@ -4,6 +4,7 @@
 /OsuDbApi-TEST/VS_Output/*
 /.vs/*
 # FILES
+# Исключен по причине хранения моих путей к нужным файлам osu
 /OsuDbApi-TEST/osu!.txt
 *Thumbs.db
 *.user
