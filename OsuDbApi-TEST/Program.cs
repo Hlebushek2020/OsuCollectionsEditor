@@ -1,5 +1,6 @@
 ﻿using OsuDbApi.CollectionDb;
 using OsuDbApi.OsuDb;
+using OsuDbApi.ScoresDb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,15 @@ namespace OsuDbApi_TEST
             //reader.Next();
             //reader.Next();
 
-            string collectionDb = Console.ReadLine();
-            CollectionDbReader collectionDbReader = new CollectionDbReader(collectionDb);
-            collectionDbReader.Next();
-            collectionDbReader.Next();
+            //string collectionDb = Console.ReadLine();
+            //CollectionDbReader collectionDbReader = new CollectionDbReader(collectionDb);
+            //collectionDbReader.Next();
+            //collectionDbReader.Next();
+
+            string scoreDb = Console.ReadLine();
+            ScoresDbReader scoresDbReader = new ScoresDbReader(scoreDb);
+            scoresDbReader.Next();
+            scoresDbReader.Next();
         }
     }
 }
