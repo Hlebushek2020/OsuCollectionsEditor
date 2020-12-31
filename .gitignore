@@ -1,5 +1,6 @@
 # DIRECTORIES
 /OsuCollectionsEditor/VS_Output/*
+/Editor/VS_Output/*
 /OsuDbApi/VS_Output/*
 /OsuDbApi-TEST/VS_Output/*
 /.vs/*
