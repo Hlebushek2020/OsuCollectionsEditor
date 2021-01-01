@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Editor.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace Editor
         public MainWindow()
         {
             InitializeComponent();
+            BeatmapSet beatmapSet = new BeatmapSet();
+            beatmapSet.Id = 0;
+            beatmapSet.Title = "dsds";
+            beatmapSet.Beatmaps.Add(new Beatmap(beatmapSet) { Description = "000", Title = "dsdfs" });
+            ggg.Items.Add(beatmapSet);
         }
     }
 }
