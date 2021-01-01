@@ -1,6 +1,8 @@
 ﻿using OsuDbApi.CollectionDb;
+using OsuDbApi.Enums;
 using OsuDbApi.OsuDb;
 using OsuDbApi.ScoresDb;
+using OsuDbApi.ScoresDb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,9 +30,16 @@ namespace OsuDbApi_TEST
 
             while (scoresDbReader.Next())
             {
-                Console.WriteLine(scoresDbReader.GetValue().BeatmapHash);
-                Console.ReadKey();
+                BeatmapScores scores = scoresDbReader.GetValue();
+                if (scores.Scores.Count != 0 && scores.Scores.First().CombinationModsUsed == Mods.TargetPractice)
+                {
+                    Console.WriteLine("Found target practice map");
+                    Console.WriteLine($"Additional value: {scores.Scores.First().AdditionalModInformation}");
+                }
             }
+
+            Console.WriteLine("Done");
+            Console.ReadKey();
         }
     }
 }

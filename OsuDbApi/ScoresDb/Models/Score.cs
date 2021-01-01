@@ -23,9 +23,9 @@ namespace OsuDbApi.ScoresDb.Models
         public int ReplayScore { get; set; }
         public short MaxCombo { get; set; }
         public bool PerfectCombo { get; set; }
-        public int CombinationModsUsed { get; set; }
+        public Mods CombinationModsUsed { get; set; }
         public DateTime TimestampReplay { get; set; }
         public long OnlineScoreId { get; set; }
-        //public double AdditionalModInformation { get; set; }
+        public double AdditionalModInformation { get; set; }
     }
 }

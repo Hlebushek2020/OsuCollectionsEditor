@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace OsuDbApi.Enums
 {
-    public enum GameplayMode : byte
+    [Flags]
+    public enum GameplayMode
     {
-        Standard = 0x00,
-        Taiko = 0x01,
-        CTB = 0x02,
-        Mania = 0x03
+        Standard = 1,
+        Taiko = 2,
+        CTB = 4,
+        Mania = 8
     }
 }

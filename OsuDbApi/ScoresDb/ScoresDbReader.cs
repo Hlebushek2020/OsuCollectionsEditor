@@ -38,9 +38,12 @@ namespace OsuDbApi.ScoresDb
         {
             if (BeatmapScoresCount == BeatmapScoresReadCount)
                 return false;
+
             beatmapScores = new BeatmapScores();
+
             if (scoresDbBinaryReader.ReadByte() == StringIndicator)
                 beatmapScores.BeatmapHash = scoresDbBinaryReader.ReadString();
+
             int intValue = scoresDbBinaryReader.ReadInt32();
             beatmapScores.Scores = new List<Score>();
             for (int i = 0; i < intValue; i++)
@@ -63,23 +66,19 @@ namespace OsuDbApi.ScoresDb
                 score.ReplayScore = scoresDbBinaryReader.ReadInt32();
                 score.MaxCombo = scoresDbBinaryReader.ReadInt16();
                 score.PerfectCombo = scoresDbBinaryReader.ReadBoolean();
-                score.CombinationModsUsed = scoresDbBinaryReader.ReadInt32();
+                score.CombinationModsUsed = (Mods)scoresDbBinaryReader.ReadInt32();
                 if (scoresDbBinaryReader.ReadByte() == StringIndicator)
                     scoresDbBinaryReader.ReadString();
                 score.TimestampReplay = new DateTime(scoresDbBinaryReader.ReadInt64());
                 scoresDbFileStream.Position += 4;
                 score.OnlineScoreId = scoresDbBinaryReader.ReadInt64();
-                //GameplayMode gameplayMode = (GameplayMode)scoresDbBinaryReader.ReadByte();
-                //if (gameplayMode != GameplayMode.CTB || gameplayMode != GameplayMode.Mania 
-                //  || gameplayMode != GameplayMode.Standart || gameplayMode != GameplayMode.Taiko)
-                //{
-                //    scoresDbFileStream.Position -= 1;
-                //    score.AdditionalModInformation = scoresDbBinaryReader.ReadDouble();
-                //}
-                //else
-                //    scoresDbFileStream.Position -= 1;
+
+                if ((score.CombinationModsUsed & Mods.TargetPractice) == Mods.TargetPractice)
+                    score.AdditionalModInformation = scoresDbBinaryReader.ReadDouble();
+
                 beatmapScores.Scores.Add(score);
             }
+            BeatmapScoresReadCount++;
             return true;
         }
 
