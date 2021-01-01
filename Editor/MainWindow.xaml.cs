@@ -25,14 +25,34 @@ namespace Editor
         private ObservableCollection<BeatmapSet> allBeatmapSet = new ObservableCollection<BeatmapSet>();
         private Dictionary<string, ObservableCollection<BeatmapSet>> collectionBeatmapSet = new Dictionary<string, ObservableCollection<BeatmapSet>>();
 
+        private ObservableCollection<BeatmapSet> currentCollection;
+
         public MainWindow()
         {
             InitializeComponent();
-            //BeatmapSet beatmapSet = new BeatmapSet();
-            //beatmapSet.Id = 0;
-            //beatmapSet.Title = "dsds";
-            //beatmapSet.Beatmaps.Add(new Beatmap(beatmapSet) { Description = "000", Title = "dsdfs" });
-            //ggg.Items.Add(beatmapSet);
+            comboBox_Collections.ItemsSource = collectionBeatmapSet.Keys;
+        }
+
+        private void MenuItem_Add_Click(object sender, RoutedEventArgs e)
+        {
+            bool repeat = true;
+            while (repeat)
+            {
+                InputTextWindow inputTextWindow = new InputTextWindow("Название коллекции");
+                inputTextWindow.ShowDialog();
+                string text = inputTextWindow.InputText;
+                if (!string.IsNullOrEmpty(text))
+                {
+                    if (collectionBeatmapSet.ContainsKey(text))
+                    {
+                        MessageBox.Show("Коллекция с таким именем уже существует!", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        continue;
+                    }
+                    collectionBeatmapSet.Add(text, new ObservableCollection<BeatmapSet>());
+                    comboBox_Collections.Items.Refresh();
+                    repeat = false;
+                }
+            }
         }
     }
 }
