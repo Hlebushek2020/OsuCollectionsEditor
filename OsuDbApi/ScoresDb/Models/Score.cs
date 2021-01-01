@@ -1,4 +1,5 @@
 ﻿using OsuDbApi.Enums;
+using OsuDbApi.ScoresDb.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

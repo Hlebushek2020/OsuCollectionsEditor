@@ -46,7 +46,7 @@
     <Compile Include="CollectionDb\CollectionDbWritter.cs" />
     <Compile Include="CollectionDb\Models\BeatmapCollection.cs" />
     <Compile Include="Enums\GameplayMode.cs" />
-    <Compile Include="Enums\Mods.cs" />
+    <Compile Include="ScoresDb\Enums\Mods.cs" />
     <Compile Include="Interfaces\IDbReader.cs" />
     <Compile Include="OsuDb\Enums\RankedStatus.cs" />
     <Compile Include="OsuDb\Enums\UserPermissions.cs" />

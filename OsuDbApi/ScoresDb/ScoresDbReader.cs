@@ -1,5 +1,6 @@
 ﻿using OsuDbApi.Enums;
 using OsuDbApi.Interfaces;
+using OsuDbApi.ScoresDb.Enums;
 using OsuDbApi.ScoresDb.Models;
 using System;
 using System.Collections.Generic;

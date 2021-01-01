@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OsuDbApi.Interfaces
 {
-    interface IDbReader<T>
+    internal interface IDbReader<T>
     {
         bool Next();
         T GetValue();

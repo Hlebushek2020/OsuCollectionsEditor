@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuDbApi.Enums
+namespace OsuDbApi.ScoresDb.Enums
 {
     [Flags]
     public enum Mods

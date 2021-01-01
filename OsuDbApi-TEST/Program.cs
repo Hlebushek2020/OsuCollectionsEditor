@@ -2,6 +2,7 @@
 using OsuDbApi.Enums;
 using OsuDbApi.OsuDb;
 using OsuDbApi.ScoresDb;
+using OsuDbApi.ScoresDb.Enums;
 using OsuDbApi.ScoresDb.Models;
 using System;
 using System.Collections.Generic;
