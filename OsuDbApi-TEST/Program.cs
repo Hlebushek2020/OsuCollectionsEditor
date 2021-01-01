@@ -25,8 +25,12 @@ namespace OsuDbApi_TEST
 
             string scoreDb = Console.ReadLine();
             ScoresDbReader scoresDbReader = new ScoresDbReader(scoreDb);
-            scoresDbReader.Next();
-            scoresDbReader.Next();
+
+            while (scoresDbReader.Next())
+            {
+                Console.WriteLine(scoresDbReader.GetValue().BeatmapHash);
+                Console.ReadKey();
+            }
         }
     }
 }

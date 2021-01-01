@@ -8,7 +8,7 @@ namespace OsuDbApi.Enums
 {
     public enum GameplayMode : byte
     {
-        Standart = 0x00,
+        Standard = 0x00,
         Taiko = 0x01,
         CTB = 0x02,
         Mania = 0x03
