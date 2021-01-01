@@ -1,6 +1,7 @@
 ﻿using Editor.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,17 @@ namespace Editor
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ObservableCollection<BeatmapSet> allBeatmapSet = new ObservableCollection<BeatmapSet>();
+        private Dictionary<string, ObservableCollection<BeatmapSet>> collectionBeatmapSet = new Dictionary<string, ObservableCollection<BeatmapSet>>();
+
         public MainWindow()
         {
             InitializeComponent();
-            BeatmapSet beatmapSet = new BeatmapSet();
-            beatmapSet.Id = 0;
-            beatmapSet.Title = "dsds";
-            beatmapSet.Beatmaps.Add(new Beatmap(beatmapSet) { Description = "000", Title = "dsdfs" });
-            ggg.Items.Add(beatmapSet);
+            //BeatmapSet beatmapSet = new BeatmapSet();
+            //beatmapSet.Id = 0;
+            //beatmapSet.Title = "dsds";
+            //beatmapSet.Beatmaps.Add(new Beatmap(beatmapSet) { Description = "000", Title = "dsdfs" });
+            //ggg.Items.Add(beatmapSet);
         }
     }
 }
