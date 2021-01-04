@@ -25,8 +25,6 @@ namespace Editor
         private ObservableCollection<BeatmapSet> allBeatmapSet = new ObservableCollection<BeatmapSet>();
         private Dictionary<string, ObservableCollection<BeatmapSet>> collectionBeatmapSet = new Dictionary<string, ObservableCollection<BeatmapSet>>();
 
-        private ObservableCollection<BeatmapSet> currentCollection;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -102,7 +100,61 @@ namespace Editor
 
         private void TreeView_All_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            if (comboBox_Collections.SelectedItem == null)
+                return;
+            string currentCollectionName = (string)comboBox_Collections.SelectedItem;
+            object objectSelectNode = treeView_All.SelectedItem;
+            ObservableCollection<BeatmapSet> currentCollection = collectionBeatmapSet[currentCollectionName];
+            if (typeof(BeatmapSet) == objectSelectNode.GetType())
+            {
+                BeatmapSet fromBeatmapSet = (BeatmapSet)objectSelectNode;
+                BeatmapSet toBeatmapSet = currentCollection.First(x => x.Id == fromBeatmapSet.Id);
+                if (toBeatmapSet == null)
+                    // ссылка??
+                    //currentCollection.Add(fromBeatmapSet);
+                    currentCollection.Add((BeatmapSet)fromBeatmapSet.Clone());
+                else
+                {
+                    if (fromBeatmapSet.Beatmaps.Count != toBeatmapSet.Beatmaps.Count)
+                        if (MessageBox.Show("Коллекция уже содержит карты из этого набора но не все. Добавить недостающие и обновить существующие?") == MessageBoxResult.Yes)
+                        {
+                            toBeatmapSet.Beatmaps.Clear();
+                            foreach (Beatmap beatmap in fromBeatmapSet.Beatmaps)
+                                toBeatmapSet.Beatmaps.Add(new Beatmap(toBeatmapSet)
+                                {
+                                    Description = beatmap.Description,
+                                    Md5 = beatmap.Md5,
+                                    Title = beatmap.Title
+                                });
+                        }
+                }
+            }
+            else
+            {
+                Beatmap beatmap = (Beatmap)objectSelectNode;
+                BeatmapSet toBeatmapSet = currentCollection.First(x => x.Id == beatmap.BeatmapSet.Id);
+                if (toBeatmapSet == null)
+                {
+                    toBeatmapSet = new BeatmapSet { Id = beatmap.BeatmapSet.Id, Title = beatmap.BeatmapSet.Title };
+                    toBeatmapSet.Beatmaps.Add(new Beatmap(toBeatmapSet)
+                    {
+                        Description = beatmap.Description,
+                        Md5 = beatmap.Md5,
+                        Title = beatmap.Title
+                    });
+                    currentCollection.Add(toBeatmapSet);
+                }
+                else
+                {
+                    if (toBeatmapSet.Beatmaps.First(x => x.Md5 == beatmap.Md5) == null)
+                        toBeatmapSet.Beatmaps.Add(new Beatmap(toBeatmapSet)
+                        {
+                            Description = beatmap.Description,
+                            Md5 = beatmap.Md5,
+                            Title = beatmap.Title
+                        });
+                }
+            }
         }
     }
 }
