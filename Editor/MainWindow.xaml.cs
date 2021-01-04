@@ -54,5 +54,55 @@ namespace Editor
                 }
             }
         }
+
+        private void MenuItem_Remove_Click(object sender, RoutedEventArgs e)
+        {
+            object objectSelectedItem = comboBox_Collections.SelectedItem;
+            if (objectSelectedItem != null)
+            {
+                if (MessageBox.Show($"Удалить коллекцию \"{objectSelectedItem}\"?", this.Title, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    collectionBeatmapSet.Remove((string)objectSelectedItem);
+                    comboBox_Collections.Items.Refresh();
+                }
+            }
+        }
+
+        private void MenuItem_Rename_Click(object sender, RoutedEventArgs e)
+        {
+            object objectSelectedItem = comboBox_Collections.SelectedItem;
+            if (objectSelectedItem != null)
+            {
+                bool repeat = true;
+                while (repeat)
+                {
+                    InputTextWindow inputTextWindow = new InputTextWindow("Название коллекции", (string)objectSelectedItem);
+                    inputTextWindow.ShowDialog();
+                    string text = inputTextWindow.InputText;
+                    if (!string.IsNullOrEmpty(text))
+                    {
+                        string oldName = (string)objectSelectedItem;
+                        if (text != oldName)
+                        {
+                            if (collectionBeatmapSet.ContainsKey(text))
+                            {
+                                MessageBox.Show("Коллекция с таким именем уже существует!", Title, MessageBoxButton.OK, MessageBoxImage.Warning);
+                                continue;
+                            }
+                            ObservableCollection<BeatmapSet> beatmapSets = collectionBeatmapSet[oldName];
+                            collectionBeatmapSet.Remove(oldName);
+                            collectionBeatmapSet.Add(text, beatmapSets);
+                            comboBox_Collections.Items.Refresh();
+                        }
+                        repeat = false;
+                    }
+                }
+            }
+        }
+
+        private void TreeView_All_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

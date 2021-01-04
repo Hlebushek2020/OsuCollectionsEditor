@@ -15,8 +15,8 @@
         <Menu VerticalAlignment="Top" FontSize="12" Grid.Row="0">
             <MenuItem Header="Коллекция">
                 <MenuItem Header="Добавить" Click="MenuItem_Add_Click"/>
-                <MenuItem Header="Переименовать"/>
-                <MenuItem Header="Удалить"/>
+                <MenuItem Header="Переименовать" Click="MenuItem_Rename_Click"/>
+                <MenuItem Header="Удалить" Click="MenuItem_Remove_Click"/>
             </MenuItem>
         </Menu>
         <Grid Margin="10 5 10 10" Grid.Row="1">
@@ -31,7 +31,7 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <CheckBox Content="Без коллекции(й)" Grid.Row="0"/>
-                <TreeView x:Name="treeView_All" Grid.Row="1" Margin="0 5 5 0">
+                <TreeView x:Name="treeView_All" Grid.Row="1" Margin="0 5 5 0" MouseDoubleClick="TreeView_All_MouseDoubleClick">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type models:BeatmapSet}" ItemsSource="{Binding Beatmaps}">
                             <TextBlock Text="{Binding Title}" FontWeight="Medium"/>
