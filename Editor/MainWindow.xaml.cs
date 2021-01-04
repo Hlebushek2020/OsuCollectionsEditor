@@ -22,13 +22,39 @@ namespace Editor
     /// </summary>
     public partial class MainWindow : Window
     {
+        // init from ?
         private ObservableCollection<BeatmapSet> allBeatmapSet = new ObservableCollection<BeatmapSet>();
+        
+        // init from
         private Dictionary<string, ObservableCollection<BeatmapSet>> collectionBeatmapSet = new Dictionary<string, ObservableCollection<BeatmapSet>>();
 
         public MainWindow()
         {
             InitializeComponent();
             comboBox_Collections.ItemsSource = collectionBeatmapSet.Keys;
+
+            treeView_All.ItemsSource = allBeatmapSet;
+
+            OsuDbApi.OsuDb.OsuDbReader osuDbReader = new OsuDbApi.OsuDb.OsuDbReader("C:\\Users\\Sergey Govorunov\\AppData\\Local\\osu!\\osu!.db");
+            // sid, list index
+            Dictionary<string, int> keyValuePairs = new Dictionary<string, int>();
+            int lid = 0;
+            while (osuDbReader.Next())
+            {
+                OsuDbApi.OsuDb.Models.Beatmap beatmap = osuDbReader.GetValue();
+                string sid = beatmap.ArtistNameUnicode + beatmap.SongTitleUnicode + beatmap.CreatorName;
+                BeatmapSet beatmapSet = new BeatmapSet { Title = $"{beatmap.ArtistNameUnicode} - {beatmap.SongTitleUnicode} [{beatmap.CreatorName}]" };
+                if (keyValuePairs.ContainsKey(sid))
+                    beatmapSet = allBeatmapSet[keyValuePairs[sid]];
+                else
+                {
+                    allBeatmapSet.Add(beatmapSet);
+                    keyValuePairs.Add(sid, lid);
+                    lid++;
+                }
+                beatmapSet.Beatmaps.Add(Beatmap.FromOsuDbBeatmap(beatmapSet, beatmap));
+            }
+
         }
 
         private void MenuItem_Add_Click(object sender, RoutedEventArgs e)
@@ -108,15 +134,13 @@ namespace Editor
             if (typeof(BeatmapSet) == objectSelectNode.GetType())
             {
                 BeatmapSet fromBeatmapSet = (BeatmapSet)objectSelectNode;
-                BeatmapSet toBeatmapSet = currentCollection.First(x => x.Id == fromBeatmapSet.Id);
+                BeatmapSet toBeatmapSet = currentCollection.FirstOrDefault(x => x.Id == fromBeatmapSet.Id);
                 if (toBeatmapSet == null)
-                    // ссылка??
-                    //currentCollection.Add(fromBeatmapSet);
                     currentCollection.Add((BeatmapSet)fromBeatmapSet.Clone());
                 else
                 {
                     if (fromBeatmapSet.Beatmaps.Count != toBeatmapSet.Beatmaps.Count)
-                        if (MessageBox.Show("Коллекция уже содержит карты из этого набора но не все. Добавить недостающие и обновить существующие?") == MessageBoxResult.Yes)
+                        if (MessageBox.Show("Коллекция уже содержит карты из этого набора но не все. Добавить недостающие и обновить существующие?", this.Title, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                         {
                             toBeatmapSet.Beatmaps.Clear();
                             foreach (Beatmap beatmap in fromBeatmapSet.Beatmaps)
@@ -132,10 +156,13 @@ namespace Editor
             else
             {
                 Beatmap beatmap = (Beatmap)objectSelectNode;
-                BeatmapSet toBeatmapSet = currentCollection.First(x => x.Id == beatmap.BeatmapSet.Id);
+                BeatmapSet toBeatmapSet = currentCollection.FirstOrDefault(x => x.Id == beatmap.BeatmapSet.Id);
                 if (toBeatmapSet == null)
                 {
-                    toBeatmapSet = new BeatmapSet { Id = beatmap.BeatmapSet.Id, Title = beatmap.BeatmapSet.Title };
+                    toBeatmapSet = new BeatmapSet(beatmap.BeatmapSet.Id)
+                    {
+                        Title = beatmap.BeatmapSet.Title
+                    };
                     toBeatmapSet.Beatmaps.Add(new Beatmap(toBeatmapSet)
                     {
                         Description = beatmap.Description,
@@ -146,7 +173,7 @@ namespace Editor
                 }
                 else
                 {
-                    if (toBeatmapSet.Beatmaps.First(x => x.Md5 == beatmap.Md5) == null)
+                    if (toBeatmapSet.Beatmaps.FirstOrDefault(x => x.Md5 == beatmap.Md5) == null)
                         toBeatmapSet.Beatmaps.Add(new Beatmap(toBeatmapSet)
                         {
                             Description = beatmap.Description,
@@ -166,7 +193,7 @@ namespace Editor
             if (typeof(BeatmapSet) == objectSelectNode.GetType())
             {
                 BeatmapSet beatmapSet = (BeatmapSet)objectSelectNode;
-                if (MessageBox.Show($"Убрать набор карт \"{beatmapSet.Title}\"?") == MessageBoxResult.Yes)
+                if (MessageBox.Show($"Убрать набор карт \"{beatmapSet.Title}\"?", this.Title, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     ObservableCollection<BeatmapSet> currentCollection = collectionBeatmapSet[currentCollectionName];
                     currentCollection.Remove(beatmapSet);
@@ -175,9 +202,22 @@ namespace Editor
             else
             {
                 Beatmap beatmap = (Beatmap)objectSelectNode;
-                if (MessageBox.Show($"Убрать карту \"{beatmap.Title}\" из набора \"{beatmap.BeatmapSet.Title}\"?") == MessageBoxResult.Yes)
-                    beatmap.BeatmapSet.Beatmaps.Remove(beatmap);
+                if (MessageBox.Show($"Убрать карту \"{beatmap.Title}\" из набора \"{beatmap.BeatmapSet.Title}\"?", this.Title, MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    if (beatmap.BeatmapSet.Beatmaps.Count <= 1)
+                        collectionBeatmapSet[currentCollectionName].Remove(beatmap.BeatmapSet);
+                    else
+                        beatmap.BeatmapSet.Beatmaps.Remove(beatmap);
+                }
             }
+        }
+
+        private void ComboBox_Collections_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            object objectSelectCollection = comboBox_Collections.SelectedItem;
+            if (objectSelectCollection == null)
+                return;
+            treeView_To.ItemsSource = collectionBeatmapSet[(string)objectSelectCollection];
         }
     }
 }

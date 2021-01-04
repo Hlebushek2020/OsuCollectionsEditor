@@ -9,16 +9,19 @@ namespace Editor.Models
 {
     public class BeatmapSet : ICloneable
     {
-        public int Id { get; set; }
+        public Guid Id { get; }
         public string Title { get; set; }
         public ObservableCollection<Beatmap> Beatmaps { get; } = new ObservableCollection<Beatmap>();
 
+        public BeatmapSet() => Id = Guid.NewGuid();
+
+        public BeatmapSet(Guid id) => Id = id;
+
         public object Clone()
         {
-            BeatmapSet beatmapSet = new BeatmapSet
+            BeatmapSet beatmapSet = new BeatmapSet(this.Id)
             {
-                Id = Id,
-                Title = Title
+                Title = this.Title
             };
             foreach (Beatmap beatmap in Beatmaps)
                 beatmapSet.Beatmaps.Add(new Beatmap(beatmapSet)
