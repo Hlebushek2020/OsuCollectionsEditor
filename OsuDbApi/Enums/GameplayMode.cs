@@ -9,9 +9,9 @@ namespace OsuDbApi.Enums
     [Flags]
     public enum GameplayMode
     {
-        Standart = 1,
-        Taiko = 2,
-        CTB = 4,
-        Mania = 8
+        Standart = 0,
+        Taiko = 1,
+        CTB = 2,
+        Mania = 3
     }
 }
