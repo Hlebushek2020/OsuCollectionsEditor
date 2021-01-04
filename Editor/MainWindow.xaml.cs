@@ -156,5 +156,28 @@ namespace Editor
                 }
             }
         }
+
+        private void TreeView_To_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (comboBox_Collections.SelectedItem == null)
+                return;
+            string currentCollectionName = (string)comboBox_Collections.SelectedItem;
+            object objectSelectNode = treeView_To.SelectedItem;
+            if (typeof(BeatmapSet) == objectSelectNode.GetType())
+            {
+                BeatmapSet beatmapSet = (BeatmapSet)objectSelectNode;
+                if (MessageBox.Show($"Убрать набор карт \"{beatmapSet.Title}\"?") == MessageBoxResult.Yes)
+                {
+                    ObservableCollection<BeatmapSet> currentCollection = collectionBeatmapSet[currentCollectionName];
+                    currentCollection.Remove(beatmapSet);
+                }
+            }
+            else
+            {
+                Beatmap beatmap = (Beatmap)objectSelectNode;
+                if (MessageBox.Show($"Убрать карту \"{beatmap.Title}\" из набора \"{beatmap.BeatmapSet.Title}\"?") == MessageBoxResult.Yes)
+                    beatmap.BeatmapSet.Beatmaps.Remove(beatmap);
+            }
+        }
     }
 }
