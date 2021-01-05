@@ -5,8 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OsuCollectionsEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" 
+        Height="450" 
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="ButtonImageStyle" TargetType="Button">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Margin" Value="0 0 5 5"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="0 0 5 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <WrapPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top">
+                <Button Style="{StaticResource ButtonImageStyle}" ToolTip="Добавить пресет">
+                    <Button.Content>
+                        <Image Height="32" Width="32" Source="/OsuCollectionsEditor;component/Resources/add.png" />
+                    </Button.Content>
+                </Button>
+                <Button Style="{StaticResource ButtonImageStyle}" ToolTip="Переименовать пресет">
+                    <Button.Content>
+                        <Image Height="32" Width="32" Source="/OsuCollectionsEditor;component/Resources/rename.png" />
+                    </Button.Content>
+                </Button>
+                <Button Style="{StaticResource ButtonImageStyle}" ToolTip="Удалить пресет">
+                    <Button.Content>
+                        <Image Height="32" Width="32" Source="/OsuCollectionsEditor;component/Resources/delete.png" />
+                    </Button.Content>
+                </Button>
+                <Button Style="{StaticResource ButtonImageStyle}" ToolTip="Редактировать коллекции пресета">
+                    <Button.Content>
+                        <Image Height="32" Width="32" Source="/OsuCollectionsEditor;component/Resources/editCollections.png" />
+                    </Button.Content>
+                </Button>
+                <Button Style="{StaticResource ButtonImageStyle}" ToolTip="Слияние пресета">
+                    <Button.Content>
+                        <Image Height="32" Width="32" Source="/OsuCollectionsEditor;component/Resources/merging.png" />
+                    </Button.Content>
+                </Button>
+                <Button Style="{StaticResource ButtonImageStyle}" ToolTip="Импорт пресета">
+                    <Button.Content>
+                        <Image Height="32" Width="32" Source="/OsuCollectionsEditor;component/Resources/import.png" />
+                    </Button.Content>
+                </Button>
+                <Button Style="{StaticResource ButtonImageStyle}" ToolTip="Экспорт пресета">
+                    <Button.Content>
+                        <Image Height="32" Width="32" Source="/OsuCollectionsEditor;component/Resources/export.png" />
+                    </Button.Content>
+                </Button>
+            </WrapPanel>
+            <ListBox Grid.Row="1"/>
+        </Grid>
+        <GridSplitter Grid.Column="1" Width="3" ShowsPreview="False" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+        <Grid Grid.Column="2" Margin="5 0 0 0">
+            <TreeView />
+        </Grid>
     </Grid>
 </Window>
