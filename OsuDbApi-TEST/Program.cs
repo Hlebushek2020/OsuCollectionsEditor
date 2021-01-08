@@ -51,7 +51,7 @@ namespace OsuDbApi_TEST
             //CollectionDbWritter collectionDbWritter = new CollectionDbWritter($"{osuDir}\\collection.db", osuDbReader.OsuVersion);
 
             //collectionDbWritter.BeatmapCollections.Add("test", all.Values.ElementAt(0));
-            //collectionDbWritter.BeatmapCollections["testc"].AddRange(all.Values.ElementAt(1));
+            //collectionDbWritter.BeatmapCollections["test"].AddRange(all.Values.ElementAt(1));
 
             //collectionDbWritter.BeatmapCollections.Add("test1", all.Values.ElementAt(2));
 
