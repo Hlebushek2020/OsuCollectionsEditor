@@ -1,15 +1,12 @@
-﻿using OsuDbApi.CollectionDb.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace OsuDbApi.CollectionDb
 {
 
-    // TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST
-
     public class CollectionDbWritter
     {
-        public List<BeatmapCollection> BeatmapCollections { get; } = new List<BeatmapCollection>();
+        public Dictionary<string, List<string>> BeatmapCollections { get; } = new Dictionary<string, List<string>>();
 
         public int OsuVersion { get; }
         public string CollectionDbFile { get; }
@@ -35,12 +32,12 @@ namespace OsuDbApi.CollectionDb
                 {
                     collectionDbBinaryWriter.Write(OsuVersion);
                     collectionDbBinaryWriter.Write(BeatmapCollections.Count);
-                    foreach (BeatmapCollection beatmapCollection in BeatmapCollections)
+                    foreach (KeyValuePair<string, List<string>> beatmapCollection in BeatmapCollections)
                     {
                         collectionDbBinaryWriter.Write(StringIndicator);
-                        collectionDbBinaryWriter.Write(beatmapCollection.Name);
-                        collectionDbBinaryWriter.Write(beatmapCollection.Beatmaps.Count);
-                        foreach (string item in beatmapCollection.Beatmaps)
+                        collectionDbBinaryWriter.Write(beatmapCollection.Key);
+                        collectionDbBinaryWriter.Write(beatmapCollection.Value.Count);
+                        foreach (string item in beatmapCollection.Value)
                         {
                             collectionDbBinaryWriter.Write(StringIndicator);
                             collectionDbBinaryWriter.Write(item);

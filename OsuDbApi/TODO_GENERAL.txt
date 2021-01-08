@@ -1,1 +1,0 @@
-﻿53 строка, проблема с значением UserPermissions класса OsuDbReader

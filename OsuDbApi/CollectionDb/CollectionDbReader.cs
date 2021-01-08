@@ -1,18 +1,14 @@
-﻿using OsuDbApi.CollectionDb.Models;
-using OsuDbApi.Interfaces;
+﻿using OsuDbApi.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OsuDbApi.CollectionDb
 {
 
     // DOCS: https://osu.ppy.sh/wiki/ru/osu%21_File_Formats/Db_%28file_format%29#collection.db-format
 
-    public class CollectionDbReader : IDisposable, IDbReader<BeatmapCollection>
+    public class CollectionDbReader : IDisposable, IDbReader<KeyValuePair<string, List<string>>>
     {
         public bool IsDisposed { get; private set; } = false;
         public int BeatmapCollectionReadCount { get; private set; } = 0;
@@ -25,7 +21,7 @@ namespace OsuDbApi.CollectionDb
 
         private readonly FileStream osuDbFileStream;
         private readonly BinaryReader osuDbBinaryReader;
-        private BeatmapCollection beatmapCollection;
+        private KeyValuePair<string, List<string>> beatmapCollection;
 
         /// <summary>
         /// Инициализует класс для чтения файла collection.db
@@ -47,24 +43,29 @@ namespace OsuDbApi.CollectionDb
         {
             if (BeatmapCollectionReadCount == BeatmapCollectionsCount)
                 return false;
-            beatmapCollection = new BeatmapCollection();
-            int intValue;
+
+            string key = string.Empty;
             // Name of the collection
             if (osuDbBinaryReader.ReadByte() == StringIndicator)
-                beatmapCollection.Name = osuDbBinaryReader.ReadString();
+                key = osuDbBinaryReader.ReadString();
+
+            List<string> mapsMd5 = new List<string>();
             // MD5 hash Beatmaps 
-            intValue = osuDbBinaryReader.ReadInt32();
-            beatmapCollection.Beatmaps = new List<string>();
-            for (int i = 0; i < intValue; i++)
+            int countMaps = osuDbBinaryReader.ReadInt32();
+            for (int i = 0; i < countMaps; i++)
             {
                 if (osuDbBinaryReader.ReadByte() == StringIndicator)
-                    beatmapCollection.Beatmaps.Add(osuDbBinaryReader.ReadString());
+                    mapsMd5.Add(osuDbBinaryReader.ReadString());
             }
+
+            beatmapCollection = new KeyValuePair<string, List<string>>(key, mapsMd5);
+
             BeatmapCollectionReadCount++;
+
             return true;
         }
 
-        public BeatmapCollection GetValue() => beatmapCollection;
+        public KeyValuePair<string, List<string>> GetValue() => beatmapCollection;
 
         public void Dispose()
         {

@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="CollectionDb\CollectionDbReader.cs" />
     <Compile Include="CollectionDb\CollectionDbWritter.cs" />
-    <Compile Include="CollectionDb\Models\BeatmapCollection.cs" />
     <Compile Include="Enums\GameplayMode.cs" />
     <Compile Include="ScoresDb\Enums\Mods.cs" />
     <Compile Include="Interfaces\IDbReader.cs" />
@@ -58,9 +57,6 @@
     <Compile Include="ScoresDb\Models\Score.cs" />
     <Compile Include="ScoresDb\Models\BeatmapScores.cs" />
     <Compile Include="ScoresDb\ScoresDbReader.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="TODO_GENERAL.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
