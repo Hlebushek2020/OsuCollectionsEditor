@@ -32,7 +32,7 @@ namespace OsuDbApi_TEST
             //}
             #endregion
 
-            #region CollectionDbWritter & OsuDbReader
+            #region CollectionDbWriter & OsuDbReader
             //string osuDir = "G:\\Osu";
 
             //Dictionary<string, List<string>> all = new Dictionary<string, List<string>>();
@@ -48,14 +48,14 @@ namespace OsuDbApi_TEST
             //    all[sid].Add(beatmap.Md5Hash);
             //}
 
-            //CollectionDbWritter collectionDbWritter = new CollectionDbWritter($"{osuDir}\\collection.db", osuDbReader.OsuVersion);
+            //CollectionDbWriter collectionDbWriter = new CollectionDbWriter($"{osuDir}\\collection.db", osuDbReader.OsuVersion);
 
-            //collectionDbWritter.BeatmapCollections.Add("test", all.Values.ElementAt(0));
-            //collectionDbWritter.BeatmapCollections["test"].AddRange(all.Values.ElementAt(1));
+            //collectionDbWriter.BeatmapCollections.Add("test", all.Values.ElementAt(0));
+            //collectionDbWriter.BeatmapCollections["test"].AddRange(all.Values.ElementAt(1));
 
-            //collectionDbWritter.BeatmapCollections.Add("test1", all.Values.ElementAt(2));
+            //collectionDbWriter.BeatmapCollections.Add("test1", all.Values.ElementAt(2));
 
-            //collectionDbWritter.Save();
+            //collectionDbWriter.Save();
             #endregion
 
             #region CollectionDbReader
@@ -71,36 +71,36 @@ namespace OsuDbApi_TEST
             #endregion
 
             #region OsuDbReader & CollectionDbReader
-            string osuDir = "G:\\Osu";
-
-            OsuDbReader osuDbReader = new OsuDbReader($"{osuDir}\\osu!.db");
-            CollectionDbReader collectionDbReader = new CollectionDbReader($"{osuDir}\\collection.db");
-
-            HashSet<string> md5HashAll = new HashSet<string>();
-
-            while (osuDbReader.Next())
-            {
-                Beatmap beatmap = osuDbReader.GetValue();
-                md5HashAll.Add(beatmap.Md5Hash);
-            }
-
-            while (collectionDbReader.Next())
-            {
-                KeyValuePair<string, List<string>> item = collectionDbReader.GetValue();
-                Console.WriteLine($"{item.Key}\t{item.Value.Count}");
-                Console.WriteLine("\tNo map: ");
-                foreach (string itemMd5 in item.Value)
-                    if (!md5HashAll.Contains(itemMd5))
-                        Console.WriteLine($"\t{itemMd5}");
-            }
-            #endregion
-
-            #region OsuDbReader & CollectionDbReader & CollectionDbWritter
             //string osuDir = "G:\\Osu";
 
             //OsuDbReader osuDbReader = new OsuDbReader($"{osuDir}\\osu!.db");
             //CollectionDbReader collectionDbReader = new CollectionDbReader($"{osuDir}\\collection.db");
-            //CollectionDbWritter collectionDbWritter = new CollectionDbWritter($"{osuDir}\\collection.db");
+
+            //HashSet<string> md5HashAll = new HashSet<string>();
+
+            //while (osuDbReader.Next())
+            //{
+            //    Beatmap beatmap = osuDbReader.GetValue();
+            //    md5HashAll.Add(beatmap.Md5Hash);
+            //}
+
+            //while (collectionDbReader.Next())
+            //{
+            //    KeyValuePair<string, List<string>> item = collectionDbReader.GetValue();
+            //    Console.WriteLine($"{item.Key}\t{item.Value.Count}");
+            //    Console.WriteLine("\tNo map: ");
+            //    foreach (string itemMd5 in item.Value)
+            //        if (!md5HashAll.Contains(itemMd5))
+            //            Console.WriteLine($"\t{itemMd5}");
+            //}
+            #endregion
+
+            #region OsuDbReader & CollectionDbReader & CollectionDbWriter
+            //string osuDir = "G:\\Osu";
+
+            //OsuDbReader osuDbReader = new OsuDbReader($"{osuDir}\\osu!.db");
+            //CollectionDbReader collectionDbReader = new CollectionDbReader($"{osuDir}\\collection.db");
+            //CollectionDbWriter collectionDbWriter = new CollectionDbWriter($"{osuDir}\\collection.db");
 
             //HashSet<string> md5HashAll = new HashSet<string>();
 
@@ -115,19 +115,19 @@ namespace OsuDbApi_TEST
             //    KeyValuePair<string, List<string>> item = collectionDbReader.GetValue();
             //    Console.WriteLine($"{item.Key}\t{item.Value.Count}");
 
-            //    collectionDbWritter.BeatmapCollections.Add(item.Key, new List<string>());
+            //    collectionDbWriter.BeatmapCollections.Add(item.Key, new List<string>());
 
             //    Console.WriteLine("\tNo map: ");
             //    foreach (string itemMd5 in item.Value)
             //        if (!md5HashAll.Contains(itemMd5))
             //            Console.WriteLine($"\t{itemMd5}");
             //        else
-            //            collectionDbWritter.BeatmapCollections[item.Key].Add(itemMd5);
+            //            collectionDbWriter.BeatmapCollections[item.Key].Add(itemMd5);
             //}
 
             //collectionDbReader.Dispose();
 
-            //collectionDbWritter.Save();
+            //collectionDbWriter.Save();
             #endregion
 
             Console.WriteLine("Done");

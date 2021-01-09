@@ -43,8 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionDb\CollectionDbReader.cs" />
-    <Compile Include="CollectionDb\CollectionDbWritter.cs" />
+    <Compile Include="CollectionDb\CollectionDbWriter.cs" />
     <Compile Include="Enums\GameplayMode.cs" />
+    <Compile Include="Interfaces\IDbWriter.cs" />
     <Compile Include="ScoresDb\Enums\Mods.cs" />
     <Compile Include="Interfaces\IDbReader.cs" />
     <Compile Include="OsuDb\Enums\RankedStatus.cs" />

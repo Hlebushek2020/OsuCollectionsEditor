@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using OsuDbApi.Interfaces;
+using System.Collections.Generic;
 using System.IO;
 
 namespace OsuDbApi.CollectionDb
 {
 
-    public class CollectionDbWritter
+    public class CollectionDbWriter : IDbWriter
     {
         public Dictionary<string, List<string>> BeatmapCollections { get; } = new Dictionary<string, List<string>>();
 
@@ -18,7 +19,7 @@ namespace OsuDbApi.CollectionDb
         /// </summary>
         /// <param name="collectionDbFile">Имя файла, включая путь к нему</param>
         /// <param name="osuVersion">Osu Version (Default: 20201210)</param>
-        public CollectionDbWritter(string collectionDbFile, int osuVersion = 20201210)
+        public CollectionDbWriter(string collectionDbFile, int osuVersion = 20201210)
         {
             OsuVersion = osuVersion;
             CollectionDbFile = collectionDbFile;
