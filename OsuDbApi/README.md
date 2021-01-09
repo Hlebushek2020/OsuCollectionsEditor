@@ -10,7 +10,7 @@
 - Taiko = 2;
 - CTB = 4;
 - Mania = 8.
-## Типы osu!db
+## Типы osu!.db
 ### Сlass OsuDbReader
 **namespace OsuDbApi.OsuDb**  
 Реализации: 
